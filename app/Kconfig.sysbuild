@@ -1,0 +1,10 @@
+# Author: Raguram Kasthurisamy
+# On the nRF5340 the Bluetooth radio runs on the network core: build its firmware too.
+# These defaults have no effect on single-core chips such as the nRF52840.
+source "${ZEPHYR_BASE}/share/sysbuild/Kconfig"
+
+config NRF_DEFAULT_IPC_RADIO
+	default y
+
+config NETCORE_IPC_RADIO_BT_HCI_IPC
+	default y

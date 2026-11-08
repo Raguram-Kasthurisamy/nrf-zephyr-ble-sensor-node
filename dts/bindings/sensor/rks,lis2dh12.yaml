@@ -1,0 +1,19 @@
+# Author: Raguram Kasthurisamy
+description: |
+  ST LIS2DH12 / LIS3DH 3-axis accelerometer on SPI, handled by this project's own driver
+  (drivers/sensor/lis2dh12). Both parts share the register map and report WHO_AM_I = 0x33.
+
+compatible: "rks,lis2dh12"
+
+include: [sensor-device.yaml, spi-device.yaml]
+
+properties:
+  irq-gpios:
+    type: phandle-array
+    description: INT1 pin, used for the data-ready trigger. Optional.
+
+  odr-hz:
+    type: int
+    default: 10
+    enum: [1, 10, 25, 50, 100, 200, 400]
+    description: Output data rate in Hz.

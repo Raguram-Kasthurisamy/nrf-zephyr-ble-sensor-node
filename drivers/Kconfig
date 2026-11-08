@@ -1,0 +1,6 @@
+# Author: Raguram Kasthurisamy
+
+
+menu "Project drivers"
+rsource "sensor/Kconfig"
+endmenu

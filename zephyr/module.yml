@@ -1,0 +1,10 @@
+# Author: Raguram Kasthurisamy
+
+# This repository is also a Zephyr module: it contributes the LIS2DH12 driver, its
+# devicetree binding and Kconfig to every build in the workspace.
+name: rks_sensor_node
+build:
+  cmake: .
+  kconfig: Kconfig
+  settings:
+    dts_root: .

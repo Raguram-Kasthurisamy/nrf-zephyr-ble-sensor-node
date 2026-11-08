@@ -1,0 +1,18 @@
+# Author: Raguram Kasthurisamy
+mainmenu "BLE sensor node"
+
+config APP_SAMPLE_INTERVAL_MS
+	int "Default sampling and reporting interval (ms)"
+	default 1000
+	range 100 10000
+	help
+	  How often the node reads its sensors and notifies a subscribed phone. Changeable at run
+	  time over BLE or the shell; the new value is kept in flash.
+
+config APP_SLOW_ADVERTISING
+	bool "Advertise at about 1 s intervals to save power"
+	help
+	  Off: fast connectable advertising for quick connections during development.
+	  On: slow advertising for battery-powered use (set by overlay-low-power.conf).
+
+source "Kconfig.zephyr"

@@ -1,0 +1,18 @@
+# Author: Raguram Kasthurisamy
+
+# West manifest: this repository is the manifest ("workspace application"), and it pulls in
+# the nRF Connect SDK at a pinned release. Set up a workspace with:
+#   west init -m https://github.com/<you>/ble-sensor-node --mr main ncs-workspace
+#   cd ncs-workspace && west update
+manifest:
+  self:
+    path: ble-sensor-node
+  remotes:
+    - name: nrfconnect
+      url-base: https://github.com/nrfconnect
+  projects:
+    - name: sdk-nrf
+      remote: nrfconnect
+      path: nrf
+      revision: v3.3.0
+      import: true

@@ -1,0 +1,20 @@
+# Author: Raguram Kasthurisamy
+
+
+config RKS_LIS2DH12
+	bool "LIS2DH12 / LIS3DH accelerometer over SPI (project driver)"
+	default y
+	depends on DT_HAS_RKS_LIS2DH12_ENABLED
+	select SPI
+	help
+	  Driver for ST's LIS2DH12 and LIS3DH 3-axis accelerometers on SPI, written for this
+	  project. Implements the Zephyr sensor API with an optional data-ready trigger.
+
+config RKS_LIS2DH12_TRIGGER
+	bool "Data-ready interrupt trigger"
+	default y
+	depends on RKS_LIS2DH12
+	select GPIO
+	help
+	  Deliver SENSOR_TRIG_DATA_READY through the INT1 pin (irq-gpios). The handler runs in
+	  the system work queue, not in interrupt context.

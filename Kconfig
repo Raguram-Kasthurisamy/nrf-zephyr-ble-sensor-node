@@ -1,0 +1,4 @@
+# Author: Raguram Kasthurisamy
+
+# Module Kconfig entry.
+rsource "drivers/Kconfig"

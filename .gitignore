@@ -1,0 +1,6 @@
+# Author: Raghuram Kasturi Sami
+build/
+twister-out*/
+keys/*.pem
+.cache/
+compile_commands.json

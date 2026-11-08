@@ -1,0 +1,36 @@
+/*
+ * Author: Raguram Kasthurisamy *
+ * Sensors on the Arduino-compatible header. The arduino_i2c / arduino_spi / arduino_header
+ * labels exist on the nRF7002 DK, so this one overlay serves both.
+ *
+ *   BME280    I2C SDA/SCL, address 0x76 (SDO to GND), 3.3 V
+ *   LIS2DH12  SPI SCK D13, MISO D12, MOSI D11, CS D10, INT1 D2, 3.3 V
+ */
+/ {
+	aliases {
+		env-sensor = &bme280;
+		accel-sensor = &lis2dh12;
+	};
+};
+
+&arduino_i2c {
+	status = "okay";
+
+	bme280: bme280@76 {
+		compatible = "bosch,bme280";
+		reg = <0x76>;
+	};
+};
+
+&arduino_spi {
+	status = "okay";
+	cs-gpios = <&arduino_header 16 GPIO_ACTIVE_LOW>;	/* D10 */
+
+	lis2dh12: lis2dh12@0 {
+		compatible = "rks,lis2dh12";
+		reg = <0>;
+		spi-max-frequency = <4000000>;
+		irq-gpios = <&arduino_header 8 GPIO_ACTIVE_HIGH>;	/* D2 = INT1 */
+		odr-hz = <25>;
+	};
+};

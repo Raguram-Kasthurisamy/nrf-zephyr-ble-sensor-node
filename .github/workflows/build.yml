@@ -1,0 +1,50 @@
+# Author: Raguram Kasthurisamy
+name: Build and test
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ble-sensor-node
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Set up the nRF Connect SDK workspace
+        uses: zephyrproject-rtos/action-zephyr-setup@v1
+        with:
+          app-path: ble-sensor-node
+          toolchains: arm-zephyr-eabi
+
+      - name: Install SDK Python requirements
+        run: pip install -r nrf/scripts/requirements-build.txt
+
+      - name: Build for nRF7002 DK
+        run: west build -b nrf7002dk/nrf5340/cpuapp ble-sensor-node/app --sysbuild -d build/nrf7002dk
+
+      - name: Build for nRF5340 DK
+        run: west build -b nrf5340dk/nrf5340/cpuapp ble-sensor-node/app --sysbuild -d build/nrf5340dk
+
+      - name: Build the low-power variant
+        run: >
+          west build -b nrf7002dk/nrf5340/cpuapp ble-sensor-node/app --sysbuild -d build/low-power
+          -- -DEXTRA_CONF_FILE=overlay-low-power.conf
+
+      - name: Unit tests on native_sim
+        run: west twister -T ble-sensor-node/tests -p native_sim/native/64 --inline-logs
+
+      - name: Upload firmware
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware
+          path: |
+            build/nrf7002dk/merged.hex
+            build/nrf7002dk/app/zephyr/zephyr.signed.bin
+            build/nrf5340dk/merged.hex

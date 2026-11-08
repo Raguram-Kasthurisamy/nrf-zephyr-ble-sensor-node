@@ -1,0 +1,2 @@
+# Vendor prefix for devicetree compatibles defined by this project.
+rks	Raguram Kasthurisamy
